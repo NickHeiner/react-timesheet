@@ -1,6 +1,25 @@
 'use strict';
 
 var React = require('react/addons'),
-    Hello = require('./hello');
+    _ = require('lodash'),
+    Hello = require('./hello'),
+    HelloList = React.createClass({
+        render: function() {
+            var helloNodes = _.map(this.props.friends, function(friend) {
+                return <Hello friend={friend} />
+            });
+            return (
+                <div>
+                    {helloNodes}
+                </div>
+            );
+        },
+        getDefaultProps: function() {
+            return {
+                friends: []
+            };
+        }
+    });
 
-React.render(<Hello friend="bobby b" />, document.getElementById('app'));
+var friendList = ['bobby b', 'gregor mccoy'];
+React.render(<HelloList friends={friendList} />, document.getElementById('app'));
