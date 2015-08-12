@@ -6,9 +6,19 @@ var NavBar = require('./common/navigation/navbar');
 var SectionHeader = require('./common/section');
 
 var App = React.createClass({
-
-  // TODO - actually implement this for realz
-  render: function () {return (<div />);}
+    render: function () {
+        return (
+            <div>
+                <NavBar />
+                <div className="container">
+                    <SectionHeader />
+                    <div className="row">
+                        <RouteHandler />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 });
 
 module.exports = App;

@@ -4,12 +4,39 @@ var mockComponent = require('../../mock');
 
 describe('Navbar Component: ', function () {
 
-  var Navbar,
-    element,
-    proxies;
+    var Navbar,
+        element,
+        proxies,
+        React,
+        TestUtils;
+    beforeEach(function () {
+        React = require('react/addons');
+        TestUtils = React.addons.TestUtils;
+    });
 
-  var React, TestUtils;
+    beforeEach(function () {
+        proxies = {
+            'react-router': {
+                RouteHandler: mockComponent('RouteHandler'),
+                Link: mockComponent('Link'),
+                State: {
+                    getRoutes: sinon.stub().returns([{name: 'projects'}])
+                }
+            },
+            '@noCallThru': true
+        };
 
-  // TODO - write the unit tests to verify the component is rendered
+        Navbar = proxyquire('./navbar', proxies);
+        element = TestUtils.renderIntoDocument(<Navbar />);
+    });
+
+    it('should instantiate the navbar', function() {
+        expect(TestUtils.isCompositeComponent(element)).to.equal(true);
+    });
+
+    it('should make the projects tab active', function() {
+        var activeLink = TestUtils.findRenderedDOMComponentWithClass(element, 'active');
+        expect(activeLink.getDOMNode().innerText).to.equal('Projects');
+    });
 
 });
